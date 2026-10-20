@@ -205,7 +205,15 @@ tail(df3)
 summary(df3)
 ```
 ## Fichero data iris.zip
+Procedemos a descargar mediante el link de descarga el archivo `.zip` usando
+`download.file`, guardándolo en la carpeta data.
 ```{r}
 URL <- 'https://archive.ics.uci.edu/static/public/53/iris.zip'
 download.file(url=URL,destfile = './data/iris.zip')
+```
+### Descomprimir el fichero
+Ahora descomprimimos el archivo y guardamos el resultado en la carpeta data mediante
+`unzip`.
+```{r}
+unzip('./data/iris.zip',exdir = './data')
 ```
