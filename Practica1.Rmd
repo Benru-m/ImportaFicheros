@@ -1,0 +1,127 @@
+---
+title: "Práctica 1. Importación de datos"
+author: "Rubén Sánchez Munuera"
+date: "`r Sys.Date()`"
+output:
+  bookdown::pdf_document2:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    figure_caption: "Figura" # Referencias en castellano
+    table_caption: "Tabla"
+  html_document:
+    echo: true
+    number_sections: true
+    theme: lumen
+    toc: true
+  html_notebook:
+    echo: true
+    number_sections: true
+    toc: true
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+  bookdown::html_document2:
+    echo: true
+    number_sections: true
+    theme: spacelab
+    toc: true
+    figure_caption: "Figura"
+    table_caption: "Tabla"
+always_allow_html: true
+params:
+  lang: ES
+lang: "`r switch(params$lang, ES = 'es-ES', EN = 'en-US')`"
+subtitle: "Análisis Exploratorio de Datos. Máster en Ciencia de Datos- UV"
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Ecuación '
+    thm: 'Teorema '
+    lem: 'Lema '
+    def: 'Definición '
+    cor: 'Corolario '
+    prp: 'Proposición '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    proof: 'Demostración. '
+    remark: 'Nota: '
+    solution: 'Solución. '
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+## Ejemplo: fichero DFP1_11122015 124700.csv
+
+### Importación del fichero
+
+1.Con la herramienta de importación podemos previsualizar el resultado,
+y podemos observar varias diferencias al hacerlo con *base* o con
+*readr*.
+
+Si usamos *base*, podemos visualizar tanto el fichero como el data frame
+que resultaría de la importación. Notamos que la previsualización se
+muestra correcta, con *tab* como separador.
+
+En cambio, usando *readr* sólo previsualizamos el resultado de la
+importación, pero nos indica el código necesario para realizarla
+manualmente. Además, por defecto selecciona *comma* como separador,
+siendo necesario cambiarlo a *tab* para la correcta importación.
+
+2.Procedemos a leer el fichero con `read.csv`.
+
+```{r}
+df1 <- read.csv(fname,sep = "\t",stringsAsFactors=F)
+```
+
+3. Ahora convertimos la fecha y la hora con `as.POSIXlt` y `as.hms`, 
+respectivamente, para lo cual primero debemos instalar y cargar la librería `hms`
+
+```{r}
+#install.packages("hms")
+library(hms)
+```
+
+```{r}
+df1$FECHA <- as.POSIXlt(df1$FECHA, format = "%d/%m/%Y")
+df1$HORA <- as.hms(df1$HORA)
+```
+
+4. Por último almacenamos en la carpeta data de la carpeta results usando `save`.
+
+```{r}
+fname <- 'data/DFP1_11122015 124700.csv'
+save(df1, file = paste0('./results/',fname))
+```
+
+### Inspección de los datos
+
+Pasamos a utilizar cuatro funciones para inspeccionar los datos:
+
+Con la función `str` vemos una descripción del dataframe que incluye el número de observaciones y variables, el nombre y tipo de cada columna y sus valores en las 
+primeras filas.
+```{r}
+str(df1)
+```
+Con la función `head` visualizamos las primeras 6 filas del dataframe. La fecha no 
+funciona correctamente, por lo que la reconvertimos a string para visualizarlo.
+```{r}
+df1$FECHA <- as.character(df1$FECHA)
+head(df1)
+```
+Análogamente, `tail` permite visualizzar las 6 últimas filas.
+```{r}
+tail(df1)
+```
+
+Por último, `summary` realiza un resumen estadístico de cada columna (variable),
+incluyendo el mínimo, máximo, media, mediana, primer cuartil y tercer cuartil.
+```{r}
+summary(df1)
+```
+
+
+
