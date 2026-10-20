@@ -75,6 +75,7 @@ cambiarlo a *tab* para la correcta importación.
 2.Procedemos a leer el fichero con `read.csv`.
 
 ```{r}
+fname <- 'data/DFP1_11122015 124700.csv'
 df1 <- read.csv(fname,sep = "\t",stringsAsFactors=F)
 ```
 
@@ -95,7 +96,7 @@ df1$HORA <- as.hms(df1$HORA)
 
 ```{r}
 fname <- 'data/DFP1_11122015 124700.csv'
-save(df1, file = paste0('./results/',fname))
+save(df1, file = './results/Deposito.RData')
 ```
 
 ### Inspección de los datos
@@ -141,7 +142,7 @@ bakery_sales_revised <- read_csv("data/bakery_sales_revised.csv",
 3. Ahora, guardamos el dataframe con `save` en la carpeta results.
 ```{r}
 filename <- "data/bakery_sales_revised.csv"
-save(bakery_sales_revised, file = paste0('./results/',filename))
+save(bakery_sales_revised, file = './results/BreadBasket.RData')
 ```
 
 ### Inspección de los datos
@@ -163,4 +164,48 @@ tail(bakery_sales_revised)
 
 ```{r}
 summary(bakery_sales_revised)
+```
+## Fichero SPSS PsychBike.sav
+
+### Importación del fichero
+
+Instalamos y cargamos la librería `haven` para poder importar el fichero SPSS.
+
+```{r}
+#install.packages("haven")
+library(haven)
+```
+
+1. Usamos `read_sav` para leer el fichero.
+```{r}
+filename <- "data/PsychBike.sav"
+df3 <- read_sav(filename)
+```
+
+2. Y lo guardamos con `save` en results como `.RData`.
+```{r}
+save(df3, file = './results/PsychBike.RData')
+```
+
+### Inspección de los datos
+
+Como con los dataframes anteriores, inspeccionamos los datos con las funciones
+`str`,`head`,`tail` y `summary`.
+```{r}
+str(df3)
+```
+```{r}
+head(df3)
+```
+
+```{r}
+tail(df3)
+```
+```{r}
+summary(df3)
+```
+## Fichero data iris.zip
+```{r}
+URL <- 'https://archive.ics.uci.edu/static/public/53/iris.zip'
+download.file(url=URL,destfile = './data/iris.zip')
 ```
