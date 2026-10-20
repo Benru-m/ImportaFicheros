@@ -3,32 +3,10 @@ title: "Práctica 1. Importación de datos"
 author: "Rubén Sánchez Munuera"
 date: "`r Sys.Date()`"
 output:
-  bookdown::pdf_document2:
-    toc: true
-    toc_depth: 3
-    number_sections: true
-    figure_caption: "Figura" # Referencias en castellano
-    table_caption: "Tabla"
-  html_document:
-    echo: true
-    number_sections: true
-    theme: lumen
-    toc: true
-  html_notebook:
-    echo: true
-    number_sections: true
-    toc: true
   pdf_document:
     toc: true
     toc_depth: 3
     number_sections: true
-  bookdown::html_document2:
-    echo: true
-    number_sections: true
-    theme: spacelab
-    toc: true
-    figure_caption: "Figura"
-    table_caption: "Tabla"
 always_allow_html: true
 params:
   lang: ES
@@ -216,4 +194,39 @@ Ahora descomprimimos el archivo y guardamos el resultado en la carpeta data medi
 `unzip`.
 ```{r}
 unzip('./data/iris.zip',exdir = './data')
+```
+
+## Fichero data iris.data
+
+### Importación del fichero
+
+1. Primero importamos los datos con `read.table`.
+```{r}
+irisdata <- read.table('./data/iris.data',sep = ",")
+```
+
+2. Ahora añadimos los nombres de las columnas.
+```{r}
+colnames(irisdata) <- c("sepal length","sepal width","petal length","petal width","class")
+```
+3. Por último guardamos el dataframe con `save`.
+```{r}
+save(irisdata,file = "./results/iris.RData")
+```
+
+### Inspección de los datos
+
+Inspeccionamos los datos.
+```{r}
+str(irisdata)
+```
+
+```{r}
+head(irisdata)
+```
+```{r}
+tail(irisdata)
+```
+```{r}
+summary(irisdata)
 ```
