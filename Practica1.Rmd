@@ -68,8 +68,9 @@ muestra correcta, con *tab* como separador.
 
 En cambio, usando *readr* sólo previsualizamos el resultado de la
 importación, pero nos indica el código necesario para realizarla
-manualmente. Además, por defecto selecciona *comma* como separador,
-siendo necesario cambiarlo a *tab* para la correcta importación.
+manualmente. También nos permite seleccionar el tipo de dato de cada variable.
+Sin embargo, por defecto selecciona *comma* como separador, siendo necesario 
+cambiarlo a *tab* para la correcta importación.
 
 2.Procedemos a leer el fichero con `read.csv`.
 
@@ -122,6 +123,44 @@ incluyendo el mínimo, máximo, media, mediana, primer cuartil y tercer cuartil.
 ```{r}
 summary(df1)
 ```
+## Fichero Transactions from a Bakery (Kaggle)
 
+### Importación del fichero 
 
+1.Una vez descargado el fichero y almacenado en la carpeta data, usamos la herramienta de importación con `readr` y así poder especificar los tipos de datos, transformando la 
+columna *date_time* de string a fecha y hora.
 
+2.Copiamos el código que genera para importarlo desde este informe.
+
+```{r}
+library(readr)
+bakery_sales_revised <- read_csv("data/bakery_sales_revised.csv", 
+    col_types = cols(date_time = col_datetime(format = "%m/%d/%Y %H:%M")))
+```
+
+3. Ahora, guardamos el dataframe con `save` en la carpeta results.
+```{r}
+filename <- "data/bakery_sales_revised.csv"
+save(bakery_sales_revised, file = paste0('./results/',filename))
+```
+
+### Inspección de los datos
+
+Igual que el dataframe del fichero anterior, inspeccionamos los datos con las funciones
+`str`,`head`,`tail` y `summary`.
+
+```{r}
+str(bakery_sales_revised)
+```
+
+```{r}
+head(bakery_sales_revised)
+```
+
+```{r}
+tail(bakery_sales_revised)
+```
+
+```{r}
+summary(bakery_sales_revised)
+```
